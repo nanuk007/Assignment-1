@@ -1,14 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession =require('cookie-session');
-const passport =require('passport');
+
 const keys =require('./config/keys');
+const bodyParser = require('body-parser');
+const cors = require("cors");
+
 
 require('./models/User');
-require('./services/passport');
+
 
 
 const app = express();
+require('./routes/authRoutes')(app);
+
+var corsOptions = {
+    origin: "http://localhost:5000"
+  };
+  
+  app.use(cors(corsOptions));
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
     cookieSession({
@@ -18,25 +33,13 @@ app.use(
 );
 mongoose.connect(keys.mongoURI,{ useNewUrlParser: true },err => {
  
-    console.log(err);
+    if(err){
+        console.log('Database connection error');
+        console.log(err);
+    }
+    console.log('connected to database');
   });
 
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-require('./routes/authRoutes')(app);
-
-if(process.env.NODE_ENV === 'production'){
-
-    app.use(express.static('client/build'));
-
-    const path = require('path');
-    app.get('*',(req,res)=>{
-
-        res.sendFile(path.resolve(__dirname,'client','build','index.html'));
-    });
-}
 
 
 const PORT = process.env.PORT || 5000;

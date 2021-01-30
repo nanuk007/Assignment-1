@@ -3,8 +3,10 @@ const  { Schema } = mongoose;
 
 
 const userSchema =new Schema({
-    googleId: String
+    username: String,
+    email: String,
+    password: String
 });
 
 
-mongoose.model('users',userSchema);
+module.exports = mongoose.model('user',userSchema);

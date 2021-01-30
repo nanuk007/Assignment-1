@@ -4,9 +4,10 @@ const Landing =()=> {
         return (
             <div style={{textAlign:'center'}}>
                 <h1>
-                    Uhome
+                    Assignment-1
                 </h1>
-                coming soon!
+                <a href='https://drive.google.com/drive/folders/1jUe5dHVAN8YH4y78wqJRC_Ry_JBt6mcm?usp=sharing'>Documenation please click here</a>
+
             </div>
         );
     
