@@ -1,6 +1,9 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 const cities =require('../cities/cities.json');
+const bodyParser = require('body-parser')
+const jsonParser = bodyParser.json();
+
 module.exports = (app) => {
 
     app.use(function (req, res, next) {
@@ -14,7 +17,7 @@ module.exports = (app) => {
 
     // post 
     app.post('/api/auth/signin', function (req,res,next){controller.signin(req,res)});
-    app.post('/api/auth/signup',function(req,res,next){ [
+    app.post('/api/auth/signup',jsonParser,function(req,res,next){ [
         verifySignUp.checkDuplicateUsernameOrEmail(req,res,next)
     ],
         controller.signup(req,res)});

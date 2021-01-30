@@ -6,25 +6,28 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-  console.log(req.body);
+  
+  
+ 
   const user = new User({
     username: req.query.username,
     email: req.query.email,
     password: bcrypt.hashSync(req.query.password, 8)
   });
 
-  user.save((err, user) => {
+  user.save( async (err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    res.send({ message: "User was registered successfully!" });
+  
+    return res.send({ message: "User was registered successfully!",user: await user });
   });
 };
 
 exports.signin = (req, res) => {
   User.findOne({
-    username: req.query.username
+    username: JSON.parse(req.query[0]).username
   })
     .exec((err, user) => {
       if (err) {
@@ -37,7 +40,7 @@ exports.signin = (req, res) => {
       }
 
       var passwordIsValid = bcrypt.compareSync(
-        req.query.password,
+        JSON.parse(req.query[0]).password,
         user.password
       );
 

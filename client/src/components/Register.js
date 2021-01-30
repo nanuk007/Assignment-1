@@ -31,9 +31,7 @@ export default function Register() {
             headers:{
             'Content-Type': 'application/json'
         } ,
-          params:{
-              value:body
-          }
+          params:body
              })
         .then(res =>{
             alert(res);
