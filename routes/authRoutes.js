@@ -1,6 +1,6 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
-
+const cities =require('../cities/cities.json');
 module.exports = (app) => {
 
     app.use(function (req, res, next) {
@@ -33,6 +33,10 @@ module.exports = (app) => {
 
         res.send(req.user);
     });
+
+    app.get("/api/cities",(req,res)=>{
+        res.send(cities);
+    })
   
 
 

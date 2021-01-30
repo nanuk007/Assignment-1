@@ -17,20 +17,31 @@ export default function Register() {
         event.preventDefault();
     }
 
-    var data ={
-        username:username,
-        email:email,
-        password:password
+    const body ={
+        username: username,
+        email: email,
+        password: password
     }
 
-    async function register(){
-        var res = await axios.post('http://localhost:5000/api/auth/signup',data);
-
-        if(res){
+    const register =() =>{
+        console.log(body);
+        axios.request({
+            method:'POST',
+            url:'http://localhost:5000/api/auth/signup',
+            headers:{
+            'Content-Type': 'application/json'
+        } ,
+          params:{
+              value:body
+          }
+             })
+        .then(res =>{
             alert(res);
-        }
-        
-       
+        })
+        .catch(err =>{
+
+            console.log(err);
+        });
           
     }
 
@@ -64,7 +75,7 @@ export default function Register() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </Form.Group>
-                    <Button onClick={register()} block size="lg" type="submit" disabled={!validateForm()}>
+                    <Button onClick={()=>{register()}} block size="lg" type="submit" disabled={!validateForm()}>
                         Register
         </Button>
       </Form>

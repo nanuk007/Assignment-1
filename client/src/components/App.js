@@ -6,7 +6,7 @@ import Landing from './Landing';
 import Header from './Header';
 import Login from './Login';
 import Register from './Register';
-const Dashboard = () => <h2>Welcome you have succesfully signin</h2>;
+import  Dashboard from './Dashboard';
 
 
 class App extends Component {
